@@ -17,6 +17,9 @@ var host = builder.Build();
 host.Run(args);
 ```
 
+## Example
+See [TestApp](https://github.com/shchahrykovich/ConsoleRouter/tree/master/Src/TestApp)
+
 ## Route format
 "{controller=help}" - expects parameter 'controller' with default value 'help'
 
