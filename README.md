@@ -18,7 +18,7 @@ host.Run(args);
 ```
 
 ## Example
-See [TestApp](https://github.com/shchahrykovich/ConsoleRouter/tree/master/Src/TestApp)
+See [TestApp](https://github.com/shchahrykovich/ConsoleRouter/tree/master/Src/TestApp/Program.cs)
 
 ## Route format
 "{controller=help}" - expects parameter 'controller' with default value 'help'
@@ -30,9 +30,9 @@ See [TestApp](https://github.com/shchahrykovich/ConsoleRouter/tree/master/Src/Te
 ## Route examples
 "task(controller=work,action=do)" - calls `WorkController.Do` method
 
-"long-task(controller=Worker,action=task) -o{output}" - calls 'WorkerController.Task' and passes argument '{output}'
+"long-task(controller=Worker,action=task) -o{output}" - calls `WorkerController.Task` and passes argument `{output}`
 
 ## Built-in services
 'CancellationToken' - fires on Ctrl-C 
 
-'TextWriter' - Console.Out
+'TextWriter' - `Console.Out`
