@@ -15,5 +15,15 @@ namespace ConsoleRouter.Tests.Controllers
         {
             _output.WriteLine("DoController -> It");
         }
+
+        public void Task(string name, string subTask = "a")
+        {
+            _output.WriteLine($"{name} - {subTask}");
+        }
+
+        public void BigTask(string name, string subTask = "a", string arg = "a")
+        {
+            _output.WriteLine($"{name} - {subTask} - {arg}");
+        }
     }
 }

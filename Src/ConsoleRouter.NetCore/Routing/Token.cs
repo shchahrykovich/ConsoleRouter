@@ -5,9 +5,9 @@ using System.Diagnostics;
 namespace ConsoleRouter.Routing
 {
     [DebuggerDisplay("{Raw}")]
-    internal class Group
+    internal class Token
     {
-        private Group()
+        private Token()
         {
         }
 
@@ -18,9 +18,9 @@ namespace ConsoleRouter.Routing
         public string Shortcut { get; private set; }
         public string Alias { get; private set; }
 
-        public static Group Parse(string raw)
+        public static Token Parse(string raw)
         {
-            var result = new Group();
+            var result = new Token();
 
             int shortcutEndIndex = raw.IndexOf("(");
             if (-1 != shortcutEndIndex)

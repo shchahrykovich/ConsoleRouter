@@ -134,5 +134,24 @@ namespace ConsoleRouter.Tests
             // Assert
             Assert.Equal(expectedResult, _output.ToString().TrimEnd());
         }
+
+        [Theory]
+        [InlineData("do task report xml", "report - xml")]
+        [InlineData("do task report", "report - a")]
+        [InlineData("do bigtask report b b", "report - b - b")]
+        [InlineData("do bigtask report b", "report - b - a")]
+        [InlineData("do bigtask report", "report - a - a")]
+        public void Should_Process_Default_Method_Arguments(String commandLine, string expectedResult)
+        {
+            // Arrange
+            var args = commandLine.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            _host.RegisterRoute("{controller} {action}");
+
+            // Act
+            _host.Run(args);
+
+            // Assert
+            Assert.Equal(expectedResult, _output.ToString().TrimEnd());
+        }
     }
 }

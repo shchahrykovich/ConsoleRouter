@@ -1,6 +1,4 @@
-param($publish = $false)
-
-$config = "Release"
+param($publish = $false, $config = "Release")
 
 dotnet build -c $config
 
@@ -10,8 +8,8 @@ if (Test-Path "$PSScriptRoot\output") {
    Remove-Item -Force -Recurse "$PSScriptRoot\output"
 }
 
-dotnet pack --no-build -c $config -o "$PSScriptRoot\output"
-dotnet pack --no-build --include-source --include-symbols -c $config -o "$PSScriptRoot\output"
+dotnet pack "$PSScriptRoot\Src\ConsoleRouter.NetCore" --no-build -c $config -o "$PSScriptRoot\output"
+dotnet pack "$PSScriptRoot\Src\ConsoleRouter.NetCore" --no-build --include-source --include-symbols -c $config -o "$PSScriptRoot\output"
 
 if ($publish) {
    $packageName = (ls "$PSScriptRoot\output\ConsoleRouter*.nupkg" | select -first 1)[0].Name

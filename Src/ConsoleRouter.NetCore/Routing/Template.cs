@@ -16,7 +16,7 @@ namespace ConsoleRouter.Routing
 
         public string Raw { get; private set; }
 
-        private List<Group> _groups = new List<Group>();
+        private List<Token> _tokens = new List<Token>();
 
         public static Template Parse(string route)
         {
@@ -26,8 +26,8 @@ namespace ConsoleRouter.Routing
             var parts = route.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var part in parts)
             {
-                var g = Group.Parse(part);
-                result._groups.Add(g);
+                var g = Token.Parse(part);
+                result._tokens.Add(g);
             }
 
             return result;
@@ -38,7 +38,7 @@ namespace ConsoleRouter.Routing
             Dictionary<String, String> items = new Dictionary<string, string>();
 
             int index = 0;
-            foreach (var g in _groups)
+            foreach (var g in _tokens)
             {
                 if (index == args.Length)
                 {
@@ -76,7 +76,7 @@ namespace ConsoleRouter.Routing
                 items.Add($"${j}", args[i]);
             }
 
-            foreach (var g in _groups)
+            foreach (var g in _tokens)
             {
                 if (null != g.Name && !items.ContainsKey(g.Name))
                 {
@@ -114,7 +114,7 @@ namespace ConsoleRouter.Routing
                 foreach (var p in method.GetParameters())
                 {
                     var name = p.Name;
-                    if(!items.ContainsKey(name))
+                    if (!items.ContainsKey(name))
                     {
                         name = $"${paramIndex}";
                     }
@@ -134,6 +134,10 @@ namespace ConsoleRouter.Routing
                             paramsMatch = false;
                             break;
                         }
+                    }
+                    else if (p.HasDefaultValue)
+                    {
+                        parameters.Add(p.DefaultValue);
                     }
                     else
                     {
