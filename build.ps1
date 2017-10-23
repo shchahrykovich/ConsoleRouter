@@ -1,12 +1,12 @@
 param($publish = $false, $config = "Release")
 
-dotnet build -c $config
-
-dotnet test --no-build -c $config "$PSScriptRoot\Src\ConsoleRouter.Tests"
-
 if (Test-Path "$PSScriptRoot\output") {
    Remove-Item -Force -Recurse "$PSScriptRoot\output"
 }
+
+dotnet build -c $config
+
+dotnet test --no-build -c $config "$PSScriptRoot\Src\ConsoleRouter.Tests"
 
 dotnet pack "$PSScriptRoot\Src\ConsoleRouter.NetCore" --no-build -c $config -o "$PSScriptRoot\output"
 dotnet pack "$PSScriptRoot\Src\ConsoleRouter.NetCore" --no-build --include-source --include-symbols -c $config -o "$PSScriptRoot\output"
