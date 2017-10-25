@@ -14,13 +14,13 @@ namespace ConsoleRouter
             _services = services;
         }
 
-        internal object Create(Match route)
+        internal object Create(Route route)
         {
             var parameters = GetParameters(route);
             return Activator.CreateInstance(route.Type, parameters);
         }
 
-        private Object[] GetParameters(Match route)
+        private Object[] GetParameters(Route route)
         {
             Object[] result = null;
 

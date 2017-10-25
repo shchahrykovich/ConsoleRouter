@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace ConsoleRouter
 {
-    public class AppHostBuilder : IDisposable
+    public class AppHostBuilder
     {
         private List<String> _routes = new List<String>();
         private Dictionary<Type, Func<Object>> _services;
@@ -26,7 +26,7 @@ namespace ConsoleRouter
             {
                 {typeof(TextWriter), () => Console.Out },
                 {typeof(CancellationToken), () => _source.Token },
-                {typeof(DefaultHelpString), () => new DefaultHelpString("Please specify help.") },
+                {typeof(DefaultHelpString), () => new DefaultHelpString("Please specify help message via 'WithHelp' helper method.") },
             };
         }
 
@@ -53,11 +53,6 @@ namespace ConsoleRouter
             }
 
             return result;
-        }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
         }
     }
 }

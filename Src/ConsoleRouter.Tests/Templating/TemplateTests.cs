@@ -1,4 +1,4 @@
-﻿using ConsoleRouter.Routing;
+﻿using ConsoleRouter.Templating;
 using Xunit;
 
 namespace ConsoleRouter.Tests

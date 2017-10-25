@@ -1,4 +1,5 @@
 ﻿using ConsoleRouter.Controllers;
+using ConsoleRouter.Templating;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -22,19 +23,27 @@ namespace ConsoleRouter.Routing
             _templates.Add(Template.Parse(route));
         }
 
-        public Match Get(string[] args)
+        public Route Get(string[] args)
         {
-            Match result = null;
+            Route result = null;
+            RouteDataExtractor extractor = new RouteDataExtractor(args);
             foreach (var template in _templates)
             {
-                result = template.Match(_controllers, args);
+                result = TryMatch(template, extractor);
                 if (null != result)
                 {
                     break;
                 }
             }
 
-            return result ?? new Match(typeof(ErrorController), typeof(ErrorController).GetMethod("ShowNotFoundError"));
+            return result ?? new Route(typeof(ErrorController), typeof(ErrorController).GetMethod("ShowNotFoundError"));
+        }
+
+        private Route TryMatch(Template template, RouteDataExtractor extractor)
+        {
+            Dictionary<String, String> routeData = extractor.Extract(template.Tokens);
+            Route result = RouteResolver.Resolve(_controllers, routeData);
+            return result;
         }
 
         private IEnumerable<Type> GetControllers()

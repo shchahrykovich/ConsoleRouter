@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
-namespace ConsoleRouter.Routing
+namespace ConsoleRouter.Templating
 {
     [DebuggerDisplay("{Raw}")]
     internal class Token
@@ -11,9 +12,9 @@ namespace ConsoleRouter.Routing
         {
         }
 
-        private List<KeyValuePair<String, String>> _defaults = new List<KeyValuePair<string, string>>();
+        private List<KeyValuePair<String, String>> _defaultRouteData = new List<KeyValuePair<string, string>>();
 
-        public string Name { get; private set; }
+        public string RouteDataName { get; private set; }
         public string Raw { get; private set; }
         public string Shortcut { get; private set; }
         public string Alias { get; private set; }
@@ -33,7 +34,7 @@ namespace ConsoleRouter.Routing
                 foreach (var defaultPair in defaultPairs)
                 {
                     (string name, string defaultValue) = ParsePair(defaultPair);
-                    result._defaults.Add(new KeyValuePair<string, string>(name, defaultValue));
+                    result._defaultRouteData.Add(new KeyValuePair<string, string>(name, defaultValue));
                 }
             }
             else
@@ -49,12 +50,12 @@ namespace ConsoleRouter.Routing
 
                 if (null != name)
                 {
-                    result.Name = name;
+                    result.RouteDataName = name;
                 }
 
                 if (null != defaultValue)
                 {
-                    result._defaults.Add(new KeyValuePair<string, string>(result.Name, defaultValue));
+                    result._defaultRouteData.Add(new KeyValuePair<string, string>(result.RouteDataName, defaultValue));
                 }
 
                 result.Raw = raw;
@@ -62,9 +63,9 @@ namespace ConsoleRouter.Routing
             return result;
         }
 
-        public IEnumerable<KeyValuePair<String, String>> GetDefaults()
+        public IEnumerable<KeyValuePair<String, String>> GetDefaultRouteData()
         {
-            return _defaults;
+            return _defaultRouteData;
         }
 
         private static (string name, string defaultValue) ParsePair(string rawPair)

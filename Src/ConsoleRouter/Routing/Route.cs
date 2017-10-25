@@ -3,16 +3,16 @@ using System.Reflection;
 
 namespace ConsoleRouter.Routing
 {
-    internal class Match
+    internal class Route
     {
-        public Match(Type type, MethodInfo methodInfo)
+        public Route(Type type, MethodInfo methodInfo)
         {
             Type = type;
             MethodInfo = methodInfo;
             Parameters = null;
         }
 
-        public Match(Type type, MethodInfo methodInfo, object[] parameters) : this(type, methodInfo)
+        public Route(Type type, MethodInfo methodInfo, object[] parameters) : this(type, methodInfo)
         {
             Parameters = parameters;
         }
