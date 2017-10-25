@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConsoleRouter.NetCore\ConsoleRouter.NetCore.csproj" />
+    <ProjectReference Include="..\ConsoleRouter\ConsoleRouter.csproj" />
   </ItemGroup>
 
 </Project>

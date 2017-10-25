@@ -8,8 +8,8 @@ dotnet build -c $config
 
 dotnet test --no-build -c $config "$PSScriptRoot\Src\ConsoleRouter.Tests"
 
-dotnet pack "$PSScriptRoot\Src\ConsoleRouter.NetCore" --no-build -c $config -o "$PSScriptRoot\output"
-dotnet pack "$PSScriptRoot\Src\ConsoleRouter.NetCore" --no-build --include-source --include-symbols -c $config -o "$PSScriptRoot\output"
+dotnet pack --no-build -c $config -o "$PSScriptRoot\output"
+dotnet pack --no-build --include-source --include-symbols -c $config -o "$PSScriptRoot\output"
 
 if ($publish) {
    $packageName = (ls "$PSScriptRoot\output\ConsoleRouter*.nupkg" | select -first 1)[0].Name
