@@ -136,6 +136,24 @@ namespace ConsoleRouter.Tests
         }
 
         [Theory]
+        [InlineData("do task -name report --subTask xml", "report - xml")]
+        [InlineData("do task report --subTask xml", "report - xml")]
+        [InlineData("do task report /subTask xml", "report - xml")]
+        [InlineData("do task report /subTask", "report - a")]
+        public void Should_Process_Undefined_Arguments(String commandLine, string expectedResult)
+        {
+            // Arrange
+            var args = commandLine.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            _host.RegisterRoute("{controller} {action}");
+
+            // Act
+            _host.Run(args);
+
+            // Assert
+            Assert.Equal(expectedResult, _output.ToString().TrimEnd());
+        }
+
+        [Theory]
         [InlineData("do task report xml", "report - xml")]
         [InlineData("do task report", "report - a")]
         [InlineData("do bigtask report b b", "report - b - b")]

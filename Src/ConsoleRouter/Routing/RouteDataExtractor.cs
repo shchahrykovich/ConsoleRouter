@@ -9,6 +9,8 @@ namespace ConsoleRouter.Routing
         private string[] _args;
         private int _argsCursor;
 
+        private static string[] _argumentNamePrefixes = new string[] { "--", "-", "/" };
+
         public RouteDataExtractor(string[] args)
         {
             _args = args;
@@ -50,8 +52,52 @@ namespace ConsoleRouter.Routing
         {
             for (int argsIndex = _argsCursor, positionIndex = 0; argsIndex < _args.Length; argsIndex++, positionIndex++)
             {
-                routeData.Add($"${positionIndex}", _args[argsIndex]);
+                var argValue = _args[argsIndex];
+                string name;
+                if (IsArgumentName(argValue))
+                {
+                    name = GetArgumentName(argValue);
+                    argsIndex++;
+                    if (_args.Length <= argsIndex)
+                    {
+                        break;
+                    }
+                    argValue = _args[argsIndex];
+                }
+                else
+                {
+                    name = $"${positionIndex}";
+                }
+                
+                routeData.Add(name, argValue);
             }
+        }
+
+        private string GetArgumentName(string argValue)
+        {
+            foreach (var prefix in _argumentNamePrefixes)
+            {
+                if (argValue.StartsWith(prefix))
+                {
+                    return argValue.Substring(prefix.Length);
+                }
+            }
+            throw new Exception("Can't extract argument name");
+        }
+
+        private bool IsArgumentName(string name)
+        {
+            bool result = false;
+            foreach (var prefix in _argumentNamePrefixes)
+            {
+                if (name.StartsWith(prefix))
+                {
+                    result = true;
+                    break;
+                }
+            }
+
+            return result;
         }
 
         private void AddRequired(IEnumerable<Token> tokens, Dictionary<string, string> routeData)
