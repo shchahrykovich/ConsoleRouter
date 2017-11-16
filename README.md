@@ -19,6 +19,7 @@ host.Run(args);
 
 ## Example
 See [TestApp](https://github.com/shchahrykovich/ConsoleRouter/tree/master/Src/TestApp/Program.cs)
+See [Test cases](https://github.com/shchahrykovich/ConsoleRouter/blob/master/Src/ConsoleRouter.Tests/AppHostTests.cs)
 
 ## Route format
 "{controller=help}" - expects parameter 'controller' with default value 'help'
